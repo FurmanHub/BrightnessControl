@@ -12,10 +12,25 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var secondWindow: UIWindow?
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        let mainVC = MainVC()
+//        mainVC.view.backgroundColor = .white
+//        let navigationController = UINavigationController(rootViewController: mainVC)
+//        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = mainVC
+        window?.makeKeyAndVisible()
+//        window?.isHidden = true
+//        secondWindow = UIWindow()
+//        let nextVC = UIViewController()
+//        nextVC.view.backgroundColor = .red
+//        secondWindow?.rootViewController = nextVC
+//        secondWindow?.makeKeyAndVisible()
+//        secondWindow?.windowLevel = .alert
+////        secondWindow?.backgroundColor = UIColor.blue.withAlphaComponent(1)
+//        secondWindow?.addSubview(blurEffectView)
         return true
     }
 

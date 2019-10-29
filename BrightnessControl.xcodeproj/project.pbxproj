@@ -12,6 +12,8 @@
 		CA675A1F2327E73700BEB95F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA675A1D2327E73700BEB95F /* Main.storyboard */; };
 		CA675A212327E73800BEB95F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA675A202327E73800BEB95F /* Assets.xcassets */; };
 		CA675A242327E73800BEB95F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA675A222327E73800BEB95F /* LaunchScreen.storyboard */; };
+		CA675A2C2327F23800BEB95F /* BrightnessControlVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA675A2B2327F23800BEB95F /* BrightnessControlVC.swift */; };
+		CA675A2E2327F89A00BEB95F /* BrightnessControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA675A2D2327F89A00BEB95F /* BrightnessControl.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		CA675A202327E73800BEB95F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA675A232327E73800BEB95F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CA675A252327E73800BEB95F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CA675A2B2327F23800BEB95F /* BrightnessControlVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrightnessControlVC.swift; sourceTree = "<group>"; };
+		CA675A2D2327F89A00BEB95F /* BrightnessControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrightnessControl.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +64,8 @@
 				CA675A202327E73800BEB95F /* Assets.xcassets */,
 				CA675A222327E73800BEB95F /* LaunchScreen.storyboard */,
 				CA675A252327E73800BEB95F /* Info.plist */,
+				CA675A2B2327F23800BEB95F /* BrightnessControlVC.swift */,
+				CA675A2D2327F89A00BEB95F /* BrightnessControl.swift */,
 			);
 			path = BrightnessControl;
 			sourceTree = "<group>";
@@ -135,6 +141,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA675A2E2327F89A00BEB95F /* BrightnessControl.swift in Sources */,
+				CA675A2C2327F23800BEB95F /* BrightnessControlVC.swift in Sources */,
 				CA675A1C2327E73700BEB95F /* ViewController.swift in Sources */,
 				CA675A1A2327E73700BEB95F /* AppDelegate.swift in Sources */,
 			);
