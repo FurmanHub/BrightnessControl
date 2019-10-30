@@ -15,7 +15,7 @@ final class BrightnessControlVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .clear
     }
     
     func start() {
@@ -23,16 +23,20 @@ final class BrightnessControlVC: UIViewController {
         window?.rootViewController = self
         window?.windowLevel = .alert
         window?.makeKeyAndVisible()
-//        window?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.1)
-//        let blurEffect = UIBlurEffect(style: .dark)
-//        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-//        blurEffectView.frame = view.bounds
-//        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-//        window?.addSubview(blurEffectView)
+        window?.isOpaque = false
+        window?.backgroundColor = .clear
+        
+        let blurEffect = UIBlurEffect(style: .dark)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = view.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
         
         let brightnessControl = BrightnessControl()
-        brightnessControl.frame = CGRect(x: 0, y: 0, width: view.frame.width / 2, height: 300)
+        brightnessControl.frame = CGRect(x: 0, y: 0, width: view.frame.width / 2 - 50, height: 300)
         brightnessControl.center = view.center
         view.addSubview(brightnessControl)
+        view.addSubview(blurEffectView)
+        view.bringSubviewToFront(brightnessControl)
     }
 }

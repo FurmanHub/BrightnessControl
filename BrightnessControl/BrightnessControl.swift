@@ -38,11 +38,24 @@ final class BrightnessControl: UIControl {
         commonInit()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        setupInitialValue()
+    }
+    
     private func commonInit() {
         backgroundColor = inactiveColor
+        layer.cornerRadius = 40
+        clipsToBounds = true
         brightnessLayer.frame = frame
-        brightnessLayer.backgroundColor = UIColor.red.cgColor
+        brightnessLayer.backgroundColor = activeColor.cgColor
         layer.addSublayer(brightnessLayer)
+    }
+    
+    
+    private func setupInitialValue() {
+        let brightness = UIScreen.main.brightness
+        self.value = self.value / brightness
     }
     
     private func updateDeviceBrightness() {
@@ -62,12 +75,12 @@ extension BrightnessControl {
     }
     
     override func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
-        guard frame.height - touch.location(in: self).y < 300 else { value = frame.height
-            return false
+        guard frame.height - touch.location(in: self).y < frame.height else { value = frame.height
+            return true
         }
         
         guard frame.height - touch.location(in: self).y > 0 else { value = 0
-            return false
+            return true
         }
         value = frame.height - touch.location(in: self).y
         return true
