@@ -17,20 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let mainVC = MainVC()
-//        mainVC.view.backgroundColor = .white
-//        let navigationController = UINavigationController(rootViewController: mainVC)
-//        window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = mainVC
         window?.makeKeyAndVisible()
-//        window?.isHidden = true
-//        secondWindow = UIWindow()
-//        let nextVC = UIViewController()
-//        nextVC.view.backgroundColor = .red
-//        secondWindow?.rootViewController = nextVC
-//        secondWindow?.makeKeyAndVisible()
-//        secondWindow?.windowLevel = .alert
-////        secondWindow?.backgroundColor = UIColor.blue.withAlphaComponent(1)
-//        secondWindow?.addSubview(blurEffectView)
         return true
     }
 
