@@ -28,6 +28,7 @@ final class BrightnessControl: UIControl {
     private let activeColor = UIColor.white
     private let brightnessLayer = CALayer()
     private let closeButton = UIButton()
+    private var previousTouchLocation: CGPoint?
     
     weak var delegate: BrightnessControlDelegate?
     
@@ -145,19 +146,20 @@ final class BrightnessControl: UIControl {
 
 extension BrightnessControl {
     override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
-        value = frame.height - touch.location(in: self).y
+        previousTouchLocation = touch.location(in: self)
         return true
     }
     
     override func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
-        guard frame.height - touch.location(in: self).y < frame.height else { value = frame.height
-            return true
-        }
-        
-        guard frame.height - touch.location(in: self).y > 0 else { value = 0
-            return true
-        }
-        value = frame.height - touch.location(in: self).y
+//        guard frame.height - touch.location(in: self).y < frame.height else { value = frame.height
+//            return true
+//        }
+//
+//        guard frame.height - touch.location(in: self).y > 0 else { value = 0
+//            return true
+//        }
+//        value = frame.height - touch.location(in: self).y
+        value = frame.height - (previousTouchLocation!.y + touch.location(in: self).y)
         return true
     }
 }

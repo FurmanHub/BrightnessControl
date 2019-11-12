@@ -14,6 +14,7 @@ final class BrightnessControlVC: UIViewController {
     private var window: UIWindow?
     private var previousWindow: UIWindow?
     private var blurEffectView: UIVisualEffectView?
+    private var brightnessControl = BrightnessControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,13 +38,37 @@ final class BrightnessControlVC: UIViewController {
             self.blurEffectView?.frame = self.view.bounds
         }
         
-        let brightnessControl = BrightnessControl()
         brightnessControl.delegate = self
         brightnessControl.frame = CGRect(x: 0, y: 0, width: view.frame.width / 2 - 50, height: 300)
         brightnessControl.center = view.center
         view.addSubview(brightnessControl)
         view.addSubview(blurEffectView!)
         view.bringSubviewToFront(brightnessControl)
+        
+        let tapToClose = UITapGestureRecognizer(target: self, action: #selector(closeControl))
+        tapToClose.delegate = self
+        view.addGestureRecognizer(tapToClose)
+    }
+    
+    @objc private func closeControl() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.blurEffectView?.frame = CGRect(x: self.view.center.x, y: self.view.center.y, width: 0, height: 0)
+            self.blurEffectView?.alpha = 0
+            self.brightnessControl.alpha = 0
+        }, completion:  { _ in
+            self.previousWindow?.makeKeyAndVisible()
+            self.window = nil
+        })
+    }
+}
+
+extension BrightnessControlVC: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if touch.view == brightnessControl {
+            return false
+        } else {
+            return true
+        }
     }
 }
 
