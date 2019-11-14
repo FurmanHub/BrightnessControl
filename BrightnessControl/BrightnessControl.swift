@@ -14,13 +14,29 @@ protocol BrightnessControlDelegate: class {
 }
 
 final class BrightnessControl: UIControl {
+    
+    // MARK: - Public properties
+    
     var value: CGFloat = 1 {
         didSet {
-            updateBrightnessLayout()
-            updateDeviceBrightness()
-            updateSunImage()
+            guard value < bounds.height else {
+                value = bounds.height
+                updateUI()
+                return
+            }
+            guard value > 0 else {
+                value = 0
+                updateUI()
+                return
+            }
+            
+            updateUI()
         }
     }
+    
+    weak var delegate: BrightnessControlDelegate?
+    
+    // MARK: - Private properties
     
     private let canvasView = UIView()
     private let sunImageView = UIImageView()
@@ -29,8 +45,6 @@ final class BrightnessControl: UIControl {
     private let brightnessLayer = CALayer()
     private let closeButton = UIButton()
     private var previousTouchLocation: CGPoint?
-    
-    weak var delegate: BrightnessControlDelegate?
     
     // MARK: - Init
     
@@ -52,6 +66,8 @@ final class BrightnessControl: UIControl {
         super.layoutSubviews()
         setupInitialValue()
     }
+    
+    // MARK: - Setup
     
     private func commonInit() {
         backgroundColor = .clear
@@ -83,28 +99,6 @@ final class BrightnessControl: UIControl {
         self.value = bounds.height * brightness
     }
     
-    private func updateDeviceBrightness() {
-        let brightness = (value / frame.height)
-        UIScreen.main.brightness = brightness
-    }
-    
-    private func updateBrightnessLayout() {
-        brightnessLayer.frame = CGRect(x: bounds.origin.x, y: bounds.height - value, width: frame.width, height: value)
-    }
-    
-    private func updateSunImage() {
-        switch value {
-        case 0...bounds.height * 0.3:
-            sunImageView.image = UIImage(named: "sunLow")
-        case (bounds.height * 0.3)...(bounds.height * 0.7):
-            sunImageView.image = UIImage(named: "sunMid")
-        case (bounds.height * 0.7)...(bounds.height):
-            sunImageView.image = UIImage(named: "sunTop")
-        default:
-            sunImageView.image = UIImage(named: "sunMid")
-        }
-    }
-    
     private func setupSunImage() {
         sunImageView.translatesAutoresizingMaskIntoConstraints = false
         sunImageView.image = UIImage(named: "sunLow")
@@ -128,12 +122,44 @@ final class BrightnessControl: UIControl {
         closeButton.setImage(UIImage(named: "deleteIcon"), for: .normal)
     }
     
+    // MARK: - Update UI
+    
+    private func updateDeviceBrightness() {
+        let brightness = (value / frame.height)
+        UIScreen.main.brightness = brightness
+    }
+    
+    private func updateBrightnessLayout() {
+        brightnessLayer.frame = CGRect(x: bounds.origin.x, y: bounds.height - value, width: frame.width, height: value)
+    }
+    
+    private func updateUI() {
+        updateBrightnessLayout()
+        updateDeviceBrightness()
+        updateSunImage()
+    }
+    
+    private func updateSunImage() {
+        switch value {
+        case 0...bounds.height * 0.3:
+            sunImageView.image = UIImage(named: "sunLow")
+        case (bounds.height * 0.3)...(bounds.height * 0.7):
+            sunImageView.image = UIImage(named: "sunMid")
+        case (bounds.height * 0.7)...(bounds.height):
+            sunImageView.image = UIImage(named: "sunTop")
+        default:
+            sunImageView.image = UIImage(named: "sunMid")
+        }
+    }
+    
     private func startAnimation() {
         alpha = 0
         UIView.animate(withDuration: 0.7) {
             self.alpha = 1
         }
     }
+    
+    // MARK: - Actions
     
     @objc private func closeControl() {
         UIView.animate(withDuration: 0.7, animations: {
@@ -151,15 +177,12 @@ extension BrightnessControl {
     }
     
     override func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
-//        guard frame.height - touch.location(in: self).y < frame.height else { value = frame.height
-//            return true
-//        }
-//
-//        guard frame.height - touch.location(in: self).y > 0 else { value = 0
-//            return true
-//        }
-//        value = frame.height - touch.location(in: self).y
-        value = frame.height - (previousTouchLocation!.y + touch.location(in: self).y)
+        if previousTouchLocation!.y > touch.location(in: self).y {
+            value = value - (touch.location(in: self).y - previousTouchLocation!.y)
+        } else {
+            value = value + (previousTouchLocation!.y - touch.location(in: self).y)
+        }
+        previousTouchLocation = touch.location(in: self)
         return true
     }
 }
